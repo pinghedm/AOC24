@@ -21,14 +21,14 @@ rowIsMonotonic::[Integer] -> Bool
 rowIsMonotonic xs = sort xs == xs || sortBy (comparing Data.Ord.Down) xs == xs
 
 
-deleteAt  xs idx = lft ++ rgt
+deleteAt xs idx = lft ++ rgt
   where (lft, _:rgt) = splitAt idx xs
 
 
 rowIsSafe row = any (\r -> rowIsAllSafeDist r && rowIsMonotonic r) (allVersionsOfRow row)
 
 allVersionsOfRow::[Integer] -> [[Integer]]
-allVersionsOfRow row = map (deleteAt row) [0..(fromIntegral (length row) - 1)]
+allVersionsOfRow row = row:map (deleteAt row) [0..(fromIntegral (length row) - 1)]
 
 main = do
     reports <- readReports
